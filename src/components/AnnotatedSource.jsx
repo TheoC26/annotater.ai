@@ -13,7 +13,7 @@ const AnnotatedSource = ({ highlightedText, summarizedText, bullets }) => {
       </div>
       <div className=" grid grid-cols-2 gap-20 h-[60vh] my-12 mx-6">
         <div
-          className="bg-grey p-6 pt-12 text-sm font-semibold rounded-[3rem] overflow-y-auto border-[1rem] border-grey"
+          className="bg-grey p-6 pt-12 text-sm font-medium rounded-[3rem] overflow-y-auto border-[1rem] border-grey"
           dangerouslySetInnerHTML={{ __html: highlightedText }}
         ></div>
         <div className="bg-grey p-10 rounded-[3rem] font-medium border-12 border-grey">
@@ -46,9 +46,9 @@ const AnnotatedSource = ({ highlightedText, summarizedText, bullets }) => {
             </div>
           </div>
           <div className="h-96 overflow-y-auto">
-            {isSummary ? summarizedText : bullets.map((bullet) => (
-              <div>{bullet}</div>
-            ))}
+            {isSummary
+              ? summarizedText
+              : bullets.map((bullet) => <div>{bullet}</div>)}
           </div>
         </div>
       </div>

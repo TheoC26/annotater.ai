@@ -9,3 +9,8 @@
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
 }
+
+strong {
+  background-color: #d5c9df;
+  font-weight: 600;
+}
