@@ -3,15 +3,21 @@ import { useAuth } from "../../context/AuthContext";
 
 const Header = ({ user }) => {
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const { logout } = useAuth();
+  const { logout, currentUser } = useAuth();
   async function handleLogout() {
     await logout();
   }
+
+  function gotoSources() {
+    if (currentUser) {
+      window.location.replace("../sources/");
+    }
+  }
   return (
-    <div className="flex justify-between px-12 py-8 align-middle top-0 w-full sticky">
+    <div className="flex justify-between px-12 py-8 pb-6 align-middle top-0 w-full sticky bg-white">
       <a
         href="./"
-        className="text-xl font-bold text-purple place-self-center sm:text-3xl sm:font-extrabold cursor-pointer"
+        className="text-2xl font-bold text-purple place-self-center sm:text-3xl sm:font-extrabold cursor-pointer"
       >
         annotater.app
       </a>
@@ -27,8 +33,8 @@ const Header = ({ user }) => {
               !settingsOpen && "hidden"
             } absolute right-1 top-16 text-gray-800 font-semibold text-lg bg-grey px-3 pr-6 rounded-2xl`}
           >
-            <div className="text-left my-3 whitespace-nowrap hover:text-gray-600">
-              view projects
+            <div className="text-left my-3 whitespace-nowrap hover:text-gray-600" onClick={gotoSources}>
+              view sources
             </div>
             <div
               className="text-left my-3 hover:text-gray-600"

@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import Head from "next/head";
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 
@@ -53,14 +54,23 @@ const LoginPage = () => {
   }
   return (
     <div className="">
+      <Head>
+        <title>annotater.app | login</title>
+        <meta
+          name="description"
+          content="Summarize and analyze any history, enlgish, science source for free!"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <Header />
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-6 md:mt-3">
         <div className="bg-gradient-to-r font-black text-3xl bg-clip-text from-purple to-blue text-transparent text-center justify-self-center w-auto sm:text-4xl">
           {isLoggingIn ? "log in" : "sign up"}
         </div>
       </div>
       <div className="flex justify-center mt-8">
-        <div className="flex flex-col align-middle w-1/2">
+        <div className="flex flex-col align-middle w-full mx-6 sm:mx-0 sm:w-2/3 md:w-1/2">
           <div
             className={`${
               !error && "hidden"
@@ -94,7 +104,7 @@ const LoginPage = () => {
           <div
             className={`${
               (email != "" || password != "") && "hidden"
-            } text-center font-black text-lg my-8`}
+            } text-center font-black text-lg my-6`}
           >
             OR
           </div>
@@ -114,12 +124,12 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
-      <div className="flex fixed bottom-3 justify-center w-full font-bold text-lg">
+      <div className="flex flex-col align-middle left-6 fixed bottom-3 justify-center w-full font-bold text-lg md:flex-row">
         <div>
           {isLoggingIn ? "don't have an account?" : "already have an account?"}
         </div>
         <div
-          className="text-purple mx-3 cursor-pointer"
+          className="text-purple cursor-pointer md:mx-3"
           onClick={() => {
             setIsLoggingIn(!isLoggingIn);
             setError(null);
@@ -131,7 +141,7 @@ const LoginPage = () => {
         </div>
       </div>
       <div
-        className="fixed bottom-3 right-6 font-semibold cursor-pointer"
+        className="fixed font-semibold cursor-pointer bottom-3 right-6"
         onClick={sendToHomePage}
       >
         continue without logging in 👉

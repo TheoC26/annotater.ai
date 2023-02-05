@@ -3,6 +3,9 @@ import Image from "next/image";
 import { Inter } from "@next/font/google";
 import { useState, useEffect, use } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { db } from "../../firebase";
+import { doc, addDoc, collection } from "firebase/firestore";
+
 import HomePage from "../components/HomePage";
 import InfoPage from "../components/InfoPage";
 import Header from "../components/Header";
@@ -15,7 +18,6 @@ const inter = Inter({ subsets: ["latin"] });
 // todo: turn pdf into text (using pdf-extract)
 // todo: add copy button and save to pdf
 // todo: save to database
-// todo: view saved summaries
 // todo: highlight text into purple
 //
 
@@ -34,12 +36,12 @@ export default function Home() {
   const [source, setSource] = useState("");
   const [subject, setSubject] = useState("");
   const [isPrimary, setIsPrimary] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  // const [highlightedText, setHighlightedText] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const [highlightedSource, setHighlightedSource] = useState("");
   const [summariesArray, setSummariesArray] = useState([]);
   const [highlightsArray, setHighlightsArray] = useState([]);
   const [bullets, setBullets] = useState("");
+  const [name, setName] = useState("");
   // var chunkSize = 2499;
 
   function editDistance(s1, s2) {
@@ -96,6 +98,7 @@ export default function Home() {
   }
 
   const startGenerating = async () => {
+    setIsLoading(true);
     setHighlightedSource(text);
     text
       .replace(/(\r\n|\n|\r)/gm, " ")
@@ -103,8 +106,13 @@ export default function Home() {
       .map(async (text_snippet, i) => {
         await generateSummary(text_snippet + " ", i);
         await generateHighlightText(text_snippet, i);
-        if (text.replace(/(\r\n|\n|\r)/gm, " ").match(/.{1,2000}/g).length -1 == i) {
-          await generateBullets(summariesArray.join(""))
+        if (
+          text.replace(/(\r\n|\n|\r)/gm, " ").match(/.{1,2000}/g).length - 1 ==
+          i
+        ) {
+          await generateName(summariesArray.join(""));
+          await generateBullets(summariesArray.join(""));
+          console.log(name);
           setPage("annotated");
         }
       });
@@ -126,7 +134,6 @@ export default function Home() {
       } source:
 
     `;
-    setIsLoading(true);
     const response = await fetch("/api/generate", {
       method: "POST",
       headers: {
@@ -203,7 +210,7 @@ export default function Home() {
       const chunkValue = decoder.decode(value);
       highlightedText = highlightedText + chunkValue;
     }
-    generateHighlightSource(highlightedText, index, input)
+    generateHighlightSource(highlightedText, index, input);
   };
 
   const generateHighlightSource = (input, highlightIndex, text_snippet) => {
@@ -223,7 +230,6 @@ export default function Home() {
     setHighlightsArray(tempArr);
   };
 
-  
   const generateBullets = async (input) => {
     setBullets("");
     const prompt = `
@@ -231,7 +237,6 @@ export default function Home() {
 
       Summarize the content from the above article with 5 bullet points clearly seperated by a new line:
     `;
-    setIsLoading(true);
     const response = await fetch("/api/generate", {
       method: "POST",
       headers: {
@@ -262,14 +267,98 @@ export default function Home() {
       const chunkValue = decoder.decode(value);
       setBullets((prev) => prev + chunkValue);
     }
+    setIsLoading(false);
+  };
+
+  const generateName = async (input) => {
+    setName("");
+    const prompt = `
+      ${input} 
+
+      Generate a title for the above source:
+    `;
+    const response = await fetch("/api/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        prompt,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    // This data is a ReadableStream
+    const data = response.body;
+    if (!data) {
+      return;
+    }
+
+    const reader = data.getReader();
+    const decoder = new TextDecoder();
+    let done = false;
+
+    while (!done) {
+      const { value, done: doneReading } = await reader.read();
+      done = doneReading;
+      const chunkValue = decoder.decode(value);
+      setName((prev) => prev + chunkValue);
+    }
   };
 
   const { currentUser } = useAuth();
 
+  const saveSummaryToDatabase = async () => {
+    if (summariesArray == []) {
+      return;
+    }
+    const summariesRef = collection(db, `/users/${currentUser.uid}/sources`);
+
+    var data = {};
+
+    if (subject != "history") {
+      data = {
+        AnnotatedSource: highlightsArray.join(""),
+        BulletPoints: bullets.split(/\n/g),
+        Summary: summariesArray.join(""),
+        SourceType: subject,
+        Name: name,
+      };
+    } else {
+      data = {
+        AnnotatedSource: highlightsArray.join(""),
+        BulletPoints: bullets.split(/\n/g),
+        Summary: summariesArray.join(""),
+        SourceType: subject,
+        Primary: isPrimary,
+        Name: name,
+      };
+    }
+
+    await addDoc(summariesRef, data)
+      .then((summariesRef) => {
+        console.log("Document has been added successfully");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+    saveSummaryToDatabase();
+    console.log("working!");
+  }, [isLoading]);
+
   return (
     <>
       <Head>
-        <title>Annotater.app</title>
+        <title>annotater.app | summarize</title>
         <meta
           name="description"
           content="Summarize and analyze any history, enlgish, science source for free!"
@@ -301,7 +390,7 @@ export default function Home() {
         {page == "loading" && <LoadingPage />}
         {page == "annotated" && (
           <AnnotatedSource
-            highlightedText={highlightsArray}
+            highlightedText={"<u>"+name+"</u></br>" + highlightsArray.join("")}
             summarizedText={summariesArray}
             bullets={bullets.split(/\n/g)}
           />

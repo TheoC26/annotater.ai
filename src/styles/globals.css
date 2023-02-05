@@ -14,3 +14,13 @@ strong {
   background-color: #d5c9df;
   font-weight: 600;
 }
+
+u {
+  font-weight: 900;
+  font-size: medium;
+  text-decoration: none;
+}
+
+.triangle::before {
+  clip-path: polygon(50% 100%, 0 0, 100% 0);
+}
