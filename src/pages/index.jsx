@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import axios from "axios";
 import { Inter } from "@next/font/google";
 import { useState, useEffect, use } from "react";
 import { useAuth } from "../../context/AuthContext";
@@ -324,7 +325,7 @@ export default function Home() {
         BulletPoints: bullets.split(/\n/g),
         Summary: summariesArray.join(""),
         SourceType: subject,
-        Name: name,
+        Name: name.trimStart(),
         CreatedAt: serverTimestamp(),
       };
     } else {
@@ -357,13 +358,20 @@ export default function Home() {
   }, [isLoading]);
 
   const getTextFromPdf = async (formData) => {
-    const response = await fetch("/api/getTextFromPdf", {
-      method: "POST",
-      headers: {
-        "Content-Type": "multipart/form-data",
+    console.log(formData)
+    const config = {
+      headers: { "content-type": "multipart/form-data" },
+      onUploadProgress: (event) => {
+        console.log(
+          `Current progress:`,
+          Math.round((event.loaded * 100) / event.total)
+        );
       },
-      body: formData,
-    });
+    };
+
+    const response = await axios.post("/api/getTextFromPdf", formData, config);
+
+    console.log("response", response.data);
   };
 
   return (

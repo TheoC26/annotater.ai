@@ -5,7 +5,7 @@ const HomePage = ({ text, setText, setPage, setSource, getText }) => {
   return (
     <div className="mx-12 flex flex-col justify-center align-middle">
       <div className="flex justify-center">
-        <div className="bg-gradient-to-r font-black text-3xl bg-clip-text from-purple to-blue text-transparent text-center justify-self-center w-auto sm:text-4xl">
+        <div className="bg-gradient-to-r mb-3 font-black text-3xl bg-clip-text from-purple to-blue text-transparent text-center justify-self-center w-auto sm:text-4xl">
           summarize, analyze, annotate
         </div>
       </div>
@@ -29,7 +29,7 @@ const HomePage = ({ text, setText, setPage, setSource, getText }) => {
         /> */}
         <FileInputButton onChange={getText} />
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center mt-3">
         <div className="text-base font-black text-gray-700">OR</div>
       </div>
       <div className="border-12 border-grey bg-grey m-8 mt-3 mx-3 p-5 text-base font-medium rounded-3xl sm:mx-28 lg:mx-48 ">
@@ -44,7 +44,13 @@ const HomePage = ({ text, setText, setPage, setSource, getText }) => {
           onChange={(e) => setText(e.target.value)}
           value={text}
         ></textarea>
-        <div className={`mx-3 ${(text.length > 1000 && text.length < 5000) ? "text-purple" : "text-gray-700"}`}>
+        <div
+          className={`mx-3 ${
+            text.length > 1000 && text.length < 5000
+              ? "text-purple"
+              : "text-gray-700"
+          }`}
+        >
           {text.length}/5000
         </div>
       </div>
@@ -56,7 +62,7 @@ const HomePage = ({ text, setText, setPage, setSource, getText }) => {
               : "bg-grey text-gray-500"
           } cursor-pointer text-2xl p-3 px-6 rounded-2xl font-bold transition-all duration-200 ease-in-out text-gray-700`}
           onClick={() => {
-            text.length > 1000 && text.length < 10000 && setPage("info");
+            text.length > 1000 && text.length < 10000 && setPage("info"); // ##@#@$%#$@$ REMEMBER TO SWITCH THIS BACKKK!!!!!!!!
           }}
         >
           Annotate!

@@ -1,9 +1,9 @@
 import React, { useState, useRef } from "react";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const SourceCard = ({ source, i, gotoSource, deleteCard, rename }) => {
+const SourceList = ({ source, i, gotoSource, deleteCard, rename }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
   const [renameOn, setRenameOn] = useState(false);
   const [nameInput, setNameInput] = useState(source.Name);
@@ -28,7 +28,7 @@ const SourceCard = ({ source, i, gotoSource, deleteCard, rename }) => {
           </div>
         ) : (
           <form
-          className="w-full mr-3"
+            className="w-full mr-3"
             onSubmit={(e) => {
               submitHandler(e);
             }}
@@ -53,14 +53,16 @@ const SourceCard = ({ source, i, gotoSource, deleteCard, rename }) => {
           onClick={(e) => {
             e.stopPropagation();
             if (renameOn) {
-                submitHandler(e);
+              submitHandler(e);
             } else {
-                setOptionsOpen(!optionsOpen);
+              setOptionsOpen(!optionsOpen);
             }
           }}
         >
           <FontAwesomeIcon
-            className={`${!renameOn ? "pt-0" : "pt-[1px]"} w-6 text-gray-600 mx-2`}
+            className={`${
+              !renameOn ? "pt-0" : "pt-[1px]"
+            } w-6 text-gray-600 mx-2`}
             icon={!renameOn ? faEllipsis : faCheck}
           />
           <div
@@ -70,7 +72,10 @@ const SourceCard = ({ source, i, gotoSource, deleteCard, rename }) => {
           >
             <div
               className="text-left my-3 whitespace-nowrap hover:text-gray-600"
-              onClick={() => {setRenameOn(true); inputRef.autofocus;}}
+              onClick={() => {
+                setRenameOn(true);
+                inputRef.autofocus;
+              }}
             >
               rename
             </div>
@@ -84,9 +89,6 @@ const SourceCard = ({ source, i, gotoSource, deleteCard, rename }) => {
           </div>
         </div>
       </div>
-      <div className="mb-6 font-medium text-sm mr-6 opacity-70">
-        {source.Summary.substring(0, 200) + "..."}
-      </div>
       <div className="flex justify-between">
         <div className="font-bold text-gray-600">{source.SourceType}</div>
         <div>{source.CreatedAt.toDate().toISOString().substring(0, 10)}</div>
@@ -95,4 +97,4 @@ const SourceCard = ({ source, i, gotoSource, deleteCard, rename }) => {
   );
 };
 
-export default SourceCard;
+export default SourceList;

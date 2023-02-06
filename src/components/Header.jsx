@@ -20,12 +20,12 @@ const Header = ({ user }) => {
   }
   return (
     <div className="flex justify-between px-12 py-8 pb-6 align-middle top-0 w-full sticky bg-white">
-      <a
-        href="./"
+      <div
+        onClick={gotoAnnotate}
         className="text-2xl font-bold text-purple place-self-center sm:text-3xl sm:font-extrabold cursor-pointer"
       >
         annotater.app
-      </a>
+      </div>
       {user ? (
         <div
           className=" relative font-extrabold bg-pink p-3 w-10 h-10 text-xs text-center rounded-xl text-white sm:w-12 sm:h-12 sm:text-base cursor-pointer hover:opacity-95 transition-all"
@@ -51,7 +51,7 @@ const Header = ({ user }) => {
             </div>
             <div className="h-[2px] -my-1 w-full bg-gray-200"></div>
             <div
-              className="text-left my-3 hover:text-gray-600"
+              className="text-left my-3 text-red-400 hover:text-red-500"
               onClick={handleLogout}
             >
               logout

@@ -15,8 +15,8 @@ const FileInputButton = ({onChange}) => {
       formData.append(event.target.name, file);
     });
 
-    onChange(formData);
     fileInputRef.current?.click();
+    onChange(formData);
     formRef.current?.reset();
   };
 

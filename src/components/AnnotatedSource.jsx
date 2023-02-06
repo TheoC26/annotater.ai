@@ -63,7 +63,7 @@ const AnnotatedSource = ({ highlightedText, summarizedText, bullets }) => {
               </div>
             </div>
             <div
-              className={`triangle grid place-content-center cursor-pointer hover:scale-105 transition-all duration-75 relative after:text-sm after:font-bold before:hidden after:hidden before:hover:block after:hover:block before:absolute before:bg-purple before:-top-1.5 before:w-3 before:h-3 after:absolute after:-top-7 after:px-3 after:rounded-md after:-right-7 after:py-0.5 after:w-20 after:text-center after:content-['${
+              className={`triangle grid place-content-center cursor-pointer scale-105 hover:scale-110 transition-all duration-75 relative after:text-sm after:font-bold before:hidden after:hidden before:hover:block after:hover:block before:absolute before:bg-purple before:-top-1.5 before:w-3 before:h-3 after:absolute after:-top-7 after:px-3 after:rounded-md after:-right-7 after:py-0.5 after:w-20 after:text-center after:content-['${
                 !copyText ? "copy" : "copied!"
               }'] after:bg-purple`}
               onClick={copySummarizedText}
