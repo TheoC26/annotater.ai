@@ -4,8 +4,7 @@ import { Inter } from "@next/font/google";
 import { useState, useEffect, use } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { db } from "../../firebase";
-import { doc, addDoc, collection } from "firebase/firestore";
-
+import { doc, addDoc, collection, serverTimestamp } from "firebase/firestore";
 import HomePage from "../components/HomePage";
 import InfoPage from "../components/InfoPage";
 import Header from "../components/Header";
@@ -312,7 +311,7 @@ export default function Home() {
   const { currentUser } = useAuth();
 
   const saveSummaryToDatabase = async () => {
-    if (summariesArray == []) {
+    if (summariesArray == [] || currentUser == null) {
       return;
     }
     const summariesRef = collection(db, `/users/${currentUser.uid}/sources`);
@@ -326,6 +325,7 @@ export default function Home() {
         Summary: summariesArray.join(""),
         SourceType: subject,
         Name: name,
+        CreatedAt: serverTimestamp(),
       };
     } else {
       data = {
@@ -335,6 +335,7 @@ export default function Home() {
         SourceType: subject,
         Primary: isPrimary,
         Name: name,
+        CreatedAt: serverTimestamp(),
       };
     }
 
@@ -355,6 +356,16 @@ export default function Home() {
     console.log("working!");
   }, [isLoading]);
 
+  const getTextFromPdf = async (formData) => {
+    const response = await fetch("/api/getTextFromPdf", {
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      body: formData,
+    });
+  };
+
   return (
     <>
       <Head>
@@ -374,6 +385,7 @@ export default function Home() {
             setText={setText}
             setSource={setSource}
             setPage={setPage}
+            getText={getTextFromPdf}
           />
         )}
         {page == "info" && (
@@ -390,7 +402,9 @@ export default function Home() {
         {page == "loading" && <LoadingPage />}
         {page == "annotated" && (
           <AnnotatedSource
-            highlightedText={"<u>"+name+"</u></br>" + highlightsArray.join("")}
+            highlightedText={
+              "<u>" + name + "</u></br>" + highlightsArray.join("")
+            }
             summarizedText={summariesArray}
             bullets={bullets.split(/\n/g)}
           />

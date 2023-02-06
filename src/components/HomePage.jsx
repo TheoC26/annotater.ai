@@ -1,6 +1,7 @@
 import React from "react";
+import FileInputButton from "./FileInputButton";
 
-const HomePage = ({ text, setText, setPage, setSource }) => {
+const HomePage = ({ text, setText, setPage, setSource, getText }) => {
   return (
     <div className="mx-12 flex flex-col justify-center align-middle">
       <div className="flex justify-center">
@@ -9,7 +10,7 @@ const HomePage = ({ text, setText, setPage, setSource }) => {
         </div>
       </div>
       <div className="flex justify-center my-6 mb-3 sm:my-8 sm:mb-3">
-        <label
+        {/* <label
           className="bg-grey cursor-pointer font-bold p-3 px-4 w-auto rounded-2xl text-base sm:text-xl text-gray-700"
           htmlFor="pdf-upload"
         >
@@ -25,7 +26,8 @@ const HomePage = ({ text, setText, setPage, setSource }) => {
             setSource(e.target.files[0]);
             console.log(e.target.files[0]);
           }}
-        />
+        /> */}
+        <FileInputButton onChange={getText} />
       </div>
       <div className="flex justify-center">
         <div className="text-base font-black text-gray-700">OR</div>
@@ -54,7 +56,7 @@ const HomePage = ({ text, setText, setPage, setSource }) => {
               : "bg-grey text-gray-500"
           } cursor-pointer text-2xl p-3 px-6 rounded-2xl font-bold transition-all duration-200 ease-in-out text-gray-700`}
           onClick={() => {
-            text.length > 1000 && text.length < 5000 && setPage("info");
+            text.length > 1000 && text.length < 10000 && setPage("info");
           }}
         >
           Annotate!
