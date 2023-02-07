@@ -76,8 +76,8 @@ const AnnotatedSource = ({ highlightedText, summarizedText, bullets }) => {
             {isSummary
               ? summarizedText
               : bullets.map((bullet) => (
-                  <div key={bullet} className="my-2 leading-snug">
-                    {bullet.length > 2 &&
+                  <div key={bullet} className="my-2">
+                    {bullet.length > 5 &&
                       (bullet.trimStart()[0] != "-") &&
                       "- "}
                     {bullet}
