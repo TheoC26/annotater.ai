@@ -40,29 +40,29 @@ const HomePage = ({ text, setText, setPage, setSource, getText }) => {
           id="source-text"
           cols="30"
           rows="15"
-          maxLength="10000"
+          maxLength="50000"
           onChange={(e) => setText(e.target.value)}
           value={text}
         ></textarea>
         <div
           className={`mx-3 ${
-            text.length > 1000 && text.length < 5000
+            text.length > 1000 && text.length < 20000
               ? "text-purple"
               : "text-gray-700"
           }`}
         >
-          {text.length}/5000
+          {text.length}/20000
         </div>
       </div>
       <div className="flex justify-center">
         <div
           className={`${
-            text.length > 1000 && text.length < 5000
+            text.length > 1000 && text.length < 20000
               ? "bg-purple"
               : "bg-grey text-gray-500"
           } cursor-pointer text-2xl p-3 px-6 rounded-2xl font-bold transition-all duration-200 ease-in-out text-gray-700`}
           onClick={() => {
-            text.length > 1000 && text.length < 10000 && setPage("info"); // ##@#@$%#$@$ REMEMBER TO SWITCH THIS BACKKK!!!!!!!!
+            text.length > 1000 && text.length < 20000 && setPage("info"); // ##@#@$%#$@$ REMEMBER TO SWITCH THIS BACKKK!!!!!!!!
           }}
         >
           Annotate!

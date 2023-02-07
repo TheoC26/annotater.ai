@@ -235,7 +235,7 @@ export default function Home() {
     const prompt = `
       ${input} 
 
-      Summarize the content from the above article with 5 bullet points clearly seperated by a new line:
+      Summarize the content from the above article in bullet points clearly seperated by a new line:
     `;
     const response = await fetch("/api/generate", {
       method: "POST",

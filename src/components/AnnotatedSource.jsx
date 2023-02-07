@@ -69,13 +69,20 @@ const AnnotatedSource = ({ highlightedText, summarizedText, bullets }) => {
               onClick={copySummarizedText}
             >
               <div className="w-0 before:hidden after:hidden after:content-['copy'] after:content-['copied!']"></div>
-              <FontAwesomeIcon icon={faCopy} />
+              <FontAwesomeIcon icon={faCopy} className="w-4" />
             </div>
           </div>
           <div className="overflow-y-auto h-[90%] lg:h-[92%]">
             {isSummary
               ? summarizedText
-              : bullets.map((bullet) => <div key={bullet}>{bullet}</div>)}
+              : bullets.map((bullet) => (
+                  <div key={bullet} className="my-2 leading-snug">
+                    {bullet.length > 2 &&
+                      (bullet.trimStart()[0] != "-") &&
+                      "- "}
+                    {bullet}
+                  </div>
+                ))}
           </div>
         </div>
       </div>

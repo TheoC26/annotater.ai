@@ -3,7 +3,7 @@ import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const SourceList = ({ source, i, gotoSource, deleteCard, rename }) => {
+const SourceList = ({ source, index, gotoSource, deleteCard, rename }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
   const [renameOn, setRenameOn] = useState(false);
   const [nameInput, setNameInput] = useState(source.Name);
@@ -39,6 +39,7 @@ const SourceList = ({ source, i, gotoSource, deleteCard, rename }) => {
               ref={inputRef}
               autoFocus
               required
+              autocomplete="off"
               id="name"
               value={nameInput}
               onChange={(e) => {
@@ -82,7 +83,7 @@ const SourceList = ({ source, i, gotoSource, deleteCard, rename }) => {
             <div className="h-[2px] -my-1 w-full bg-gray-200"></div>
             <div
               className="text-left my-3 text-red-400 hover:text-red-500"
-              onClick={() => deleteCard(source.id, i)}
+              onClick={() => deleteCard(source.id, index)}
             >
               delete
             </div>

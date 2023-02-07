@@ -36,6 +36,7 @@ const FileInputButton = ({onChange}) => {
         type="file"
         accept=".pdf"
         id="pdf-upload"
+        name="theFiles"
       />
     </form>
   );

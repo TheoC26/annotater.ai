@@ -3,7 +3,7 @@ import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
-const SourceCard = ({ source, i, gotoSource, deleteCard, rename }) => {
+const SourceCard = ({ source, index, gotoSource, deleteCard, rename }) => {
   const [optionsOpen, setOptionsOpen] = useState(false);
   const [renameOn, setRenameOn] = useState(false);
   const [nameInput, setNameInput] = useState(source.Name);
@@ -16,6 +16,7 @@ const SourceCard = ({ source, i, gotoSource, deleteCard, rename }) => {
   return (
     <div
       key={source.id}
+      style={{ alignSelf: "start" }}
       className=" bg-grey p-3 rounded-2xl cursor-pointer border-2 hover:shadow-lg hover:-translate-y-1 hover:scale-[1.005] transition-all"
       onClick={() => {
         !renameOn && gotoSource(source.id);
@@ -28,7 +29,7 @@ const SourceCard = ({ source, i, gotoSource, deleteCard, rename }) => {
           </div>
         ) : (
           <form
-          className="w-full mr-3"
+            className="w-full mr-3"
             onSubmit={(e) => {
               submitHandler(e);
             }}
@@ -39,6 +40,7 @@ const SourceCard = ({ source, i, gotoSource, deleteCard, rename }) => {
               ref={inputRef}
               autoFocus
               required
+              autocomplete="off"
               id="name"
               value={nameInput}
               onChange={(e) => {
@@ -53,14 +55,16 @@ const SourceCard = ({ source, i, gotoSource, deleteCard, rename }) => {
           onClick={(e) => {
             e.stopPropagation();
             if (renameOn) {
-                submitHandler(e);
+              submitHandler(e);
             } else {
-                setOptionsOpen(!optionsOpen);
+              setOptionsOpen(!optionsOpen);
             }
           }}
         >
           <FontAwesomeIcon
-            className={`${!renameOn ? "pt-0" : "pt-[1px]"} w-6 text-gray-600 mx-2`}
+            className={`${
+              !renameOn ? "pt-0" : "pt-[1px]"
+            } w-6 text-gray-600 mx-2`}
             icon={!renameOn ? faEllipsis : faCheck}
           />
           <div
@@ -70,14 +74,17 @@ const SourceCard = ({ source, i, gotoSource, deleteCard, rename }) => {
           >
             <div
               className="text-left my-3 whitespace-nowrap hover:text-gray-600"
-              onClick={() => {setRenameOn(true); inputRef.autofocus;}}
+              onClick={() => {
+                setRenameOn(true);
+                inputRef.autofocus;
+              }}
             >
               rename
             </div>
             <div className="h-[2px] -my-1 w-full bg-gray-200"></div>
             <div
               className="text-left my-3 text-red-400 hover:text-red-500"
-              onClick={() => deleteCard(source.id, i)}
+              onClick={() => deleteCard(source.id, index)}
             >
               delete
             </div>

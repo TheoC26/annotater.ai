@@ -40,7 +40,7 @@ const SourcesPage = () => {
       console.log(err);
     });
     var tempArr = sources;
-    tempArr.pop(index);
+    tempArr.splice(index, 1);
     setSources(tempArr);
     setSources([...sources]);
     console.log(tempArr.length);
