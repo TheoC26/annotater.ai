@@ -18,8 +18,9 @@ const Header = ({ user }) => {
       window.location.replace("../");
     }
   }
+  
   return (
-    <div className="flex justify-between px-12 py-8 pb-6 align-middle top-0 w-full sticky bg-white">
+    <div className="flex justify-between px-12 py-8 pb-6 align-middle top-0 w-full sticky bg-white z-50">
       <div
         onClick={gotoAnnotate}
         className="text-2xl font-bold text-purple place-self-center sm:text-3xl sm:font-extrabold cursor-pointer"

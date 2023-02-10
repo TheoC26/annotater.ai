@@ -31,7 +31,7 @@ const apiRoute = nextConnect({
 });
 
 // apiRoute.use(upload.single("theFiles"));
-apiRoute.use(storeAsImage.bulk(-1));
+storeAsImage.bulk(-1);
 
 apiRoute.post((req, res) => {
   res.status(200).json({ data: "success" });

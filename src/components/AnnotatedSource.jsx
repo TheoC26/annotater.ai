@@ -1,11 +1,58 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { sanitize } from "dompurify";
 import { faCopy } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAuth } from "../../context/AuthContext";
+import { db } from "../../firebase";
+import { doc, addDoc, serverTimestamp } from "firebase/firestore";
 
-const AnnotatedSource = ({ highlightedText, summarizedText, bullets }) => {
+const AnnotatedSource = ({ highlightedText, summarizedText, bullets, id }) => {
   const [isSummary, setIsSummary] = useState(true);
   const [copyText, setCopyText] = useState(false);
+  const [notes, setNotes] = useState("");
+  const doneTypingInterval = 3000;
+  var typingTimer;
+
+  const { currentUser } = useAuth();
+
+  function doneTyping() {
+    console.log("done typing");
+  }
+  const saveSummaryToDatabase = async () => {
+
+    const summariesRef = doc(db, `/users/${currentUser.uid}/sources`, );
+
+    var data = {};
+
+    if (subject != "history") {
+      data = {
+        AnnotatedSource: highlightsArray.join(""),
+        BulletPoints: bullets.split(/\n/g),
+        Summary: summariesArray.join(""),
+        SourceType: subject,
+        Name: name.trimStart(),
+        CreatedAt: serverTimestamp(),
+      };
+    } else {
+      data = {
+        AnnotatedSource: highlightsArray.join(""),
+        BulletPoints: bullets.split(/\n/g),
+        Summary: summariesArray.join(""),
+        SourceType: subject,
+        Primary: isPrimary,
+        Name: name,
+        CreatedAt: serverTimestamp(),
+      };
+    }
+
+    await addDoc(summariesRef, data)
+      .then((summariesRef) => {
+        console.log("Document has been added successfully");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   function copySummarizedText() {
     console.log(highlightedText)
@@ -77,14 +124,25 @@ const AnnotatedSource = ({ highlightedText, summarizedText, bullets }) => {
               ? summarizedText
               : bullets.map((bullet) => (
                   <div key={bullet} className="my-2">
-                    {bullet.length > 5 &&
-                      (bullet.trimStart()[0] != "-") &&
-                      "- "}
+                    {bullet.length > 5 && bullet.trimStart()[0] != "-" && "- "}
                     {bullet}
                   </div>
                 ))}
           </div>
         </div>
+      </div>
+      <div className="mx-6 p-3 bg-grey border-12 border-grey rounded-[3rem]">
+        <textarea
+          name="notes"
+          className="bg-grey w-full outline-none p-3 resize-none"
+          placeholder="Add your notes here..."
+          cols="30"
+          rows="10"
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          onKeyDown={(e) => {clearTimeout(typingTimer);}}
+          onKeyUp={(e) => {clearTimeout(typingTimer); typingTimer = setTimeout(doneTyping, doneTypingInterval)}}
+        ></textarea>
       </div>
     </div>
   );

@@ -87,7 +87,7 @@ const LoginPage = () => {
           ></input>
           <input
             className="bg-grey m-3 p-4 px-6 text-base font-medium rounded-full outline-none"
-            type="text"
+            type="password"
             placeholder="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -95,7 +95,7 @@ const LoginPage = () => {
           {!isLoggingIn && (
             <input
               className="bg-grey m-3 p-4 px-6 text-base font-medium rounded-full outline-none"
-              type="text"
+              type="password"
               placeholder="confirm password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
