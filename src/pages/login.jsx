@@ -62,7 +62,7 @@ const LoginPage = () => {
           content="Summarize and analyze any history, enlgish, science source for free!"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/Logo.png" />
       </Head>
       <Header isHeader={true} />
       <div className="flex justify-center mt-6 md:mt-3">
@@ -123,7 +123,13 @@ const LoginPage = () => {
               <div className="">log in with google</div>
             )}
           </div>
-          <div className="text-center mt-3">By {isLoggingIn ? "logging in" : "making an account"} you are agreeing to these <Link href={'./terms'} className="text-cyan-600 font-medium">terms and conditions</Link></div>
+          <div className="text-center mt-3">
+            By {isLoggingIn ? "logging in" : "making an account"} you are
+            agreeing to these{" "}
+            <Link href={"./terms"} className="text-cyan-600 font-medium">
+              terms and conditions
+            </Link>
+          </div>
         </div>
       </div>
       <div className="flex align-middle left-6 fixed bottom-3 justify-center w-full font-bold text-lg flex-row">
