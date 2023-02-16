@@ -26,7 +26,7 @@ const FileInputButton = ({onChange}) => {
         className="bg-grey cursor-pointer font-bold p-3 px-4 w-auto rounded-2xl text-base sm:text-xl text-gray-700"
         htmlFor="pdf-upload"
       >
-        Upload PDF
+        Upload File
       </label>
       <input
         className="hidden"

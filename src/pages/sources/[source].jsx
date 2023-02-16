@@ -33,6 +33,7 @@ const SourcePage = () => {
           }
           summarizedText={sourceData.Summary}
           bullets={sourceData.BulletPoints}
+          id={source}
         />
       )}
       {!loading && !sourceData && (

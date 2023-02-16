@@ -4,58 +4,38 @@ import { faCopy } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuth } from "../../context/AuthContext";
 import { db } from "../../firebase";
-import { doc, addDoc, serverTimestamp } from "firebase/firestore";
+import { doc, addDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import NoteArea from "./NoteArea";
+import useFetchSource from "../../hooks/fetchSource";
 
 const AnnotatedSource = ({ highlightedText, summarizedText, bullets, id }) => {
   const [isSummary, setIsSummary] = useState(true);
   const [copyText, setCopyText] = useState(false);
   const [notes, setNotes] = useState("");
-  const doneTypingInterval = 3000;
-  var typingTimer;
+  const { loading, error, sourceData, setSource } = useFetchSource(id);
 
   const { currentUser } = useAuth();
 
-  function doneTyping() {
-    console.log("done typing");
+  const updateNotes = async () => {
+    const docRef = doc(db, `/users/${currentUser.uid}/sources`, id);
+    await setDoc(docRef, {
+      Notes: notes,
+    }, { merge: true });
   }
-  const saveSummaryToDatabase = async () => {
 
-    const summariesRef = doc(db, `/users/${currentUser.uid}/sources`, );
+  useEffect(() => {
+    setTimeout(() => {
+      if (sourceData != null) {
+        setNotes(sourceData.Notes);
+      }
+    }, 100)
+    
+  
+  }, [sourceData])
+  
 
-    var data = {};
-
-    if (subject != "history") {
-      data = {
-        AnnotatedSource: highlightsArray.join(""),
-        BulletPoints: bullets.split(/\n/g),
-        Summary: summariesArray.join(""),
-        SourceType: subject,
-        Name: name.trimStart(),
-        CreatedAt: serverTimestamp(),
-      };
-    } else {
-      data = {
-        AnnotatedSource: highlightsArray.join(""),
-        BulletPoints: bullets.split(/\n/g),
-        Summary: summariesArray.join(""),
-        SourceType: subject,
-        Primary: isPrimary,
-        Name: name,
-        CreatedAt: serverTimestamp(),
-      };
-    }
-
-    await addDoc(summariesRef, data)
-      .then((summariesRef) => {
-        console.log("Document has been added successfully");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   function copySummarizedText() {
-    console.log(highlightedText)
     setCopyText(true);
     isSummary
       ? navigator.clipboard.writeText(summarizedText)
@@ -64,7 +44,6 @@ const AnnotatedSource = ({ highlightedText, summarizedText, bullets, id }) => {
       setCopyText(false);
     }, 1000);
   }
-
 
   return (
     <div className="mx-6 lg:mx-12 my-6 flex flex-col justify-center align-middle">
@@ -131,19 +110,7 @@ const AnnotatedSource = ({ highlightedText, summarizedText, bullets, id }) => {
           </div>
         </div>
       </div>
-      <div className="mx-6 p-3 bg-grey border-12 border-grey rounded-[3rem]">
-        <textarea
-          name="notes"
-          className="bg-grey w-full outline-none p-3 resize-none"
-          placeholder="Add your notes here..."
-          cols="30"
-          rows="10"
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-          onKeyDown={(e) => {clearTimeout(typingTimer);}}
-          onKeyUp={(e) => {clearTimeout(typingTimer); typingTimer = setTimeout(doneTyping, doneTypingInterval)}}
-        ></textarea>
-      </div>
+      <NoteArea notes={notes} setNotes={setNotes} updateNotes={updateNotes} />
     </div>
   );
 };

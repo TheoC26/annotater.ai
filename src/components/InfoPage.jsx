@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef, useEffect} from "react";
 
 const InfoPage = ({
   text,
@@ -9,6 +9,15 @@ const InfoPage = ({
   generateSummary,
   setPage,
 }) => {
+  const subjectRef = useRef();
+  const primaryRef = useRef();
+
+  useEffect(() => {
+    subjectRef.current.scrollIntoView();
+  }, [])
+
+  const scrollToPrimary = () => setTimeout(() => primaryRef.current.scrollIntoView(), 10);
+  
   return (
     <div className="mx-12 flex flex-col justify-center align-middle">
       <div className="flex justify-center">
@@ -19,12 +28,12 @@ const InfoPage = ({
       <div className="bg-grey m-8 mt-8 mx-3 p-5 text-sm font-medium rounded-3xl h-96 sm:mx-28 lg:mx-48 overflow-y-scroll border-8 border-grey">
         {text}
       </div>
-      <div className="flex flex-col justify-around w-2/3 mx-auto my-3 text-gray-700 gap-3 md:flex-row">
+      <div className="flex flex-col justify-around w-2/3 mx-auto my-3 text-gray-700 gap-3 md:flex-row" ref={subjectRef}>
         <div
           className={`${
             subject == "history" ? "bg-purple" : "bg-grey"
           } p-3 px-10 font-semibold cursor-pointer text-center text-2xl rounded-2xl transition-colors duration-200 ease-in-out`}
-          onClick={() => setSubject("history")}
+          onClick={() => {scrollToPrimary(); setSubject("history");}}
         >
           history
         </div>
@@ -57,6 +66,7 @@ const InfoPage = ({
         className={`${
           subject != "history" && "hidden"
         } transition-all duration-100 ease-in-out text-gray-700`}
+        ref={primaryRef}
       >
         <div className="h-1 rounded-full mx-12 my-6 bg-grey"></div>
         <div className="flex flex-col justify-around w-2/3 mx-auto my-3 mb-6 gap-3 md:flex-row md:w-1/3">

@@ -2,6 +2,7 @@ import Header from "../components/Header";
 import Head from "next/head";
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
+import Link from "next/link";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -63,7 +64,7 @@ const LoginPage = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
+      <Header isHeader={true} />
       <div className="flex justify-center mt-6 md:mt-3">
         <div className="bg-gradient-to-r font-black text-3xl bg-clip-text from-purple to-blue text-transparent text-center justify-self-center w-auto sm:text-4xl">
           {isLoggingIn ? "log in" : "sign up"}
@@ -122,14 +123,15 @@ const LoginPage = () => {
               <div className="">log in with google</div>
             )}
           </div>
+          <div className="text-center mt-3">By {isLoggingIn ? "logging in" : "making an account"} you are agreeing to these <Link href={'./terms'} className="text-cyan-600 font-medium">terms and conditions</Link></div>
         </div>
       </div>
-      <div className="flex flex-col align-middle left-6 fixed bottom-3 justify-center w-full font-bold text-lg md:flex-row">
+      <div className="flex align-middle left-6 fixed bottom-3 justify-center w-full font-bold text-lg flex-row">
         <div>
           {isLoggingIn ? "don't have an account?" : "already have an account?"}
         </div>
         <div
-          className="text-purple cursor-pointer md:mx-3"
+          className="text-purple cursor-pointer mx-3"
           onClick={() => {
             setIsLoggingIn(!isLoggingIn);
             setError(null);
@@ -139,12 +141,6 @@ const LoginPage = () => {
         >
           {isLoggingIn ? "sign up" : "log in"}
         </div>
-      </div>
-      <div
-        className="fixed font-semibold cursor-pointer bottom-3 right-6"
-        onClick={sendToHomePage}
-      >
-        continue without logging in 👉
       </div>
     </div>
   );

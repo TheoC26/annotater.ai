@@ -44,6 +44,18 @@ export default function Home() {
   const [name, setName] = useState("");
   // var chunkSize = 2499;
 
+  const { currentUser } = useAuth();
+
+  useEffect(() => {
+    if (!currentUser) {
+      sendToLogin();
+    }
+  }, [currentUser]);
+
+  function sendToLogin() {
+    window.location.replace("./login");
+  }
+
   function editDistance(s1, s2) {
     s1 = s1.toLowerCase();
     s2 = s2.toLowerCase();
@@ -112,7 +124,6 @@ export default function Home() {
         ) {
           await generateName(summariesArray.join(""));
           await generateBullets(summariesArray.join(""));
-          console.log(name);
           setPage("annotated");
         }
       });
@@ -309,8 +320,6 @@ export default function Home() {
     }
   };
 
-  const { currentUser } = useAuth();
-
   const saveSummaryToDatabase = async () => {
     if (summariesArray == [] || currentUser == null) {
       return;
@@ -327,6 +336,7 @@ export default function Home() {
         SourceType: subject,
         Name: name.trimStart(),
         CreatedAt: serverTimestamp(),
+        Notes: "",
       };
     } else {
       data = {
@@ -337,12 +347,12 @@ export default function Home() {
         Primary: isPrimary,
         Name: name,
         CreatedAt: serverTimestamp(),
+        Notes: "",
       };
     }
 
     await addDoc(summariesRef, data)
       .then((summariesRef) => {
-        console.log("Document has been added successfully");
       })
       .catch((error) => {
         console.log(error);
@@ -354,11 +364,9 @@ export default function Home() {
       return;
     }
     saveSummaryToDatabase();
-    console.log("working!");
   }, [isLoading]);
 
   const getTextFromPdf = async (formData) => {
-    console.log(formData)
     const config = {
       headers: { "content-type": "multipart/form-data" },
       onUploadProgress: (event) => {
@@ -415,6 +423,7 @@ export default function Home() {
             }
             summarizedText={summariesArray}
             bullets={bullets.split(/\n/g)}
+            // id={} NEED TO ADD THIS
           />
         )}
       </main>

@@ -1,4 +1,5 @@
 import React from "react";
+import FakeInput from "./FakeInput";
 import FileInputButton from "./FileInputButton";
 
 const HomePage = ({ text, setText, setPage, setSource, getText }) => {
@@ -10,24 +11,8 @@ const HomePage = ({ text, setText, setPage, setSource, getText }) => {
         </div>
       </div>
       <div className="flex justify-center my-6 mb-3 sm:my-8 sm:mb-3">
-        {/* <label
-          className="bg-grey cursor-pointer font-bold p-3 px-4 w-auto rounded-2xl text-base sm:text-xl text-gray-700"
-          htmlFor="pdf-upload"
-        >
-          Upload PDF
-        </label>
-        <input
-          className="hidden"
-          type="file"
-          accept=".pdf"
-          id="pdf-upload"
-          onChange={(e) => {
-            setPage(1);
-            setSource(e.target.files[0]);
-            console.log(e.target.files[0]);
-          }}
-        /> */}
-        <FileInputButton onChange={getText} />
+        {/* <FileInputButton onChange={getText} /> */}
+        <FakeInput />
       </div>
       <div className="flex justify-center mt-3">
         <div className="text-base font-black text-gray-700">OR</div>

@@ -43,7 +43,8 @@ const SourcesPage = () => {
     tempArr.splice(index, 1);
     setSources(tempArr);
     setSources([...sources]);
-    console.log(tempArr.length);
+    window.location.reload(false);
+
   }
 
   async function rename(id, newName) {
