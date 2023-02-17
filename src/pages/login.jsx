@@ -70,24 +70,24 @@ const LoginPage = () => {
           {isLoggingIn ? "log in" : "sign up"}
         </div>
       </div>
-      <div className="flex justify-center mt-8">
+      <div className="flex justify-center mt-3 sm:mt-8">
         <div className="flex flex-col align-middle w-full mx-6 sm:mx-0 sm:w-2/3 md:w-1/2">
           <div
             className={`${
               !error && "hidden"
-            } bg-red-300 m-3 p-4 px-6 text-base font-medium rounded-full text-center text-slate-800`}
+            } bg-red-300 mx-3 p-2 px-6 text-base font-medium rounded-full text-center text-slate-800 sm:m-3 sm:p-4`}
           >
             {error}
           </div>
           <input
-            className="bg-grey m-3 p-4 px-6 text-base font-medium rounded-full outline-none"
+            className="bg-grey mx-3 m-1 mt-2 sm:m-3 p-4 px-6 text-base font-medium rounded-full outline-none"
             type="text"
             placeholder="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></input>
           <input
-            className="bg-grey m-3 p-4 px-6 text-base font-medium rounded-full outline-none"
+            className="bg-grey mx-3 m-1 sm:m-3 p-4 px-6 text-base font-medium rounded-full outline-none"
             type="password"
             placeholder="password"
             value={password}
@@ -95,7 +95,7 @@ const LoginPage = () => {
           ></input>
           {!isLoggingIn && (
             <input
-              className="bg-grey m-3 p-4 px-6 text-base font-medium rounded-full outline-none"
+              className="bg-grey mx-3 m-1 sm:m-3 p-4 px-6 text-base font-medium rounded-full outline-none"
               type="password"
               placeholder="confirm password"
               value={confirmPassword}
@@ -105,7 +105,7 @@ const LoginPage = () => {
           <div
             className={`${
               (email != "" || password != "") && "hidden"
-            } text-center font-black text-lg my-6`}
+            } text-center font-black text-lg my-3 sm:6`}
           >
             OR
           </div>

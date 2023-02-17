@@ -19,13 +19,13 @@ const InfoPage = ({
   const scrollToPrimary = () => setTimeout(() => primaryRef.current.scrollIntoView(), 10);
   
   return (
-    <div className="mx-12 flex flex-col justify-center align-middle">
+    <div className="mx-6 flex flex-col justify-center align-middle">
       <div className="flex justify-center">
         <div className="bg-gradient-to-r font-black text-3xl bg-clip-text from-purple to-blue text-transparent text-center justify-self-center w-auto sm:text-4xl">
           tell us a little about your source...
         </div>
       </div>
-      <div className="bg-grey m-8 mt-8 mx-3 p-5 text-sm font-medium rounded-3xl h-96 sm:mx-28 lg:mx-48 overflow-y-scroll border-8 border-grey">
+      <div className="bg-grey m-8 mt-8 mx-0 p-5 text-sm font-medium rounded-3xl h-96 sm:mx-28 lg:mx-48 overflow-y-scroll border-8 border-grey">
         {text}
       </div>
       <div className="flex flex-col justify-around w-2/3 mx-auto my-3 text-gray-700 gap-3 md:flex-row" ref={subjectRef}>
@@ -94,7 +94,7 @@ const InfoPage = ({
         className={`${
           (subject == "" || (subject == "history" && isPrimary == null)) &&
           "hidden"
-        } flex justify-center my-6 fixed right-6 bottom-3`}
+        } flex justify-center my-6 fixed right-2 bottom-0 sm:right-6 sm:bottom-3`}
       >
         <div
           className={`bg-gradient-to-r text-gray-700 from-purple to-blue cursor-pointer text-2xl p-3 px-6 rounded-2xl font-bold transition-all duration-200 ease-in-out`}
