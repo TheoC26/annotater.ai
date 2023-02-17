@@ -46,11 +46,11 @@ export default function Home() {
 
   const { currentUser } = useAuth();
 
-  useEffect(() => {
-    if (!currentUser) {
-      sendToLogin();
-    }
-  }, [currentUser]);
+  // useEffect(() => {
+  //   if (!currentUser) {
+  //     sendToLogin();
+  //   }
+  // }, [currentUser]);
 
   function sendToLogin() {
     window.location.replace("./login");
