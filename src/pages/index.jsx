@@ -95,7 +95,7 @@ const index = () => {
               annotate!
             </div>
           </div>
-          <div className="flex align-middle mb-6 -translate-x-10 xl:block xl:mb-0">
+          <div className="flex align-middle mb-6 -translate-x-10 xl:translate-x-0 xl:block xl:mb-0">
             <div className="text-5xl font-black mr-5 xl:mr-0">1</div>
             <div className="text-3xl font-semibold xl:mt-6">
               paste your source in the box and press <b>annotate!</b>
@@ -103,9 +103,9 @@ const index = () => {
           </div>
         </div>
         <div className="flex space-x-16 mt-12">
-          <div className="flex align-middle mb-6 xl:block xl:mb-0 translate-x-6">
+          <div className="flex align-middle mb-6 xl:block xl:mb-0 translate-x-6 xl:translate-x-0">
             <div className="text-5xl font-black mr-5 xl:mr-0">2</div>
-            <div className="text-3xl font-semibold xl:mt-6">
+            <div className="text-3xl font-semibold mr-6 xl:mt-6">
               tell us a little bit more about your source
             </div>
           </div>
@@ -160,7 +160,7 @@ const index = () => {
               </div>
             </div>
           </div>
-          <div className="flex align-middle mb-6 -translate-x-10 xl:block xl:mb-0">
+          <div className="flex align-middle mb-6 -translate-x-10 xl:translate-x-0 xl:block xl:mb-0">
             <div className="text-5xl font-black mr-5 xl:mr-0">3</div>
             <div className="text-3xl font-semibold xl:mt-6">
               review your annotated source, add your own notes and save it to
