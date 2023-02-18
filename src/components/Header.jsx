@@ -11,12 +11,12 @@ const Header = ({ user, isHeader }) => {
 
   function gotoSources() {
     if (currentUser) {
-      window.location.replace("../sources/");
+      window.location.replace("../sources");
     }
   }
   function gotoAnnotate() {
     if (currentUser) {
-      window.location.replace("../");
+      window.location.replace("../summarize");
     }
   }
   

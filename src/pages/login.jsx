@@ -2,7 +2,10 @@ import Header from "../components/Header";
 import Head from "next/head";
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
+import { Inter } from "@next/font/google";
 import Link from "next/link";
+
+const inter = Inter({ subsets: ["latin"] });
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -20,7 +23,7 @@ const LoginPage = () => {
   }, [currentUser]);
 
   function sendToHomePage() {
-    window.location.replace("./");
+    window.location.replace("./summarize");
   }
 
   async function submitHandler() {
@@ -54,7 +57,7 @@ const LoginPage = () => {
     }
   }
   return (
-    <div className="">
+    <div className={inter.className}>
       <Head>
         <title>annotater.app | login</title>
         <meta

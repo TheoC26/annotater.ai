@@ -14,7 +14,7 @@ const SourcePage = () => {
 
   useEffect(() => {
     if (!currentUser) {
-      window.location.replace("../login");
+      window.location.replace("../");
     }
   }, [currentUser]);
 
