@@ -377,7 +377,7 @@ export default function Home() {
       },
     };
 
-    const response = await axios.post("/api/getTextFromPdf", formData, config);
+    const response = await axios.post("/api/getTextFromPdfv2", formData, config);
 
     console.log("response", response.data);
   };

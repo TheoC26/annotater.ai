@@ -11,8 +11,8 @@ const HomePage = ({ text, setText, setPage, setSource, getText }) => {
         </div>
       </div>
       <div className="flex justify-center my-2 mb-1 sm:my-8 sm:mb-3">
-        {/* <FileInputButton onChange={getText} /> */}
-        <FakeInput />
+        <FileInputButton onChange={getText} />
+        {/* <FakeInput /> */}
       </div>
       <div className="flex justify-center mt-3">
         <div className="text-base font-black text-gray-700">OR</div>
